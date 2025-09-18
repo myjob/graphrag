@@ -19,10 +19,10 @@ INIT_YAML = f"""\
 
 models:
   {defs.DEFAULT_CHAT_MODEL_ID}:
-    type: {defs.DEFAULT_CHAT_MODEL_TYPE.value} # or azure_openai_chat
+    type: {defs.DEFAULT_CHAT_MODEL_TYPE} # or azure_openai_chat
     # api_base: https://<instance>.openai.azure.com
     # api_version: 2024-05-01-preview
-    auth_type: {defs.DEFAULT_CHAT_MODEL_AUTH_TYPE.value} # or azure_managed_identity
+    auth_type: {defs.DEFAULT_CHAT_MODEL_AUTH_TYPE} # or azure_managed_identity
     api_key: ${{GRAPHRAG_API_KEY}} # set this in the generated .env file
     # audience: "https://cognitiveservices.azure.com/.default"
     # organization: <organization_id>
@@ -31,16 +31,16 @@ models:
     # encoding_model: {defs.ENCODING_MODEL} # automatically set by tiktoken if left undefined
     model_supports_json: true # recommended if this is available for your model.
     concurrent_requests: {language_model_defaults.concurrent_requests} # max number of simultaneous LLM requests allowed
-    async_mode: {language_model_defaults.async_mode.value} # or asyncio
+    async_mode: {language_model_defaults.async_mode} # or asyncio
     retry_strategy: native
     max_retries: {language_model_defaults.max_retries}
     tokens_per_minute: {language_model_defaults.tokens_per_minute}              # set to null to disable rate limiting
     requests_per_minute: {language_model_defaults.requests_per_minute}            # set to null to disable rate limiting
   {defs.DEFAULT_EMBEDDING_MODEL_ID}:
-    type: {defs.DEFAULT_EMBEDDING_MODEL_TYPE.value} # or azure_openai_embedding
+    type: {defs.DEFAULT_EMBEDDING_MODEL_TYPE} # or azure_openai_embedding
     # api_base: https://<instance>.openai.azure.com
     # api_version: 2024-05-01-preview
-    auth_type: {defs.DEFAULT_EMBEDDING_MODEL_AUTH_TYPE.value} # or azure_managed_identity
+    auth_type: {defs.DEFAULT_EMBEDDING_MODEL_AUTH_TYPE} # or azure_managed_identity
     api_key: ${{GRAPHRAG_API_KEY}}
     # audience: "https://cognitiveservices.azure.com/.default"
     # organization: <organization_id>
@@ -49,7 +49,7 @@ models:
     # encoding_model: {defs.ENCODING_MODEL} # automatically set by tiktoken if left undefined
     model_supports_json: true # recommended if this is available for your model.
     concurrent_requests: {language_model_defaults.concurrent_requests} # max number of simultaneous LLM requests allowed
-    async_mode: {language_model_defaults.async_mode.value} # or asyncio
+    async_mode: {language_model_defaults.async_mode} # or asyncio
     retry_strategy: native
     max_retries: {language_model_defaults.max_retries}
     tokens_per_minute: null              # set to null to disable rate limiting or auto for dynamic
@@ -59,9 +59,9 @@ models:
 
 input:
   storage:
-    type: {graphrag_config_defaults.input.storage.type.value} # or blob
+    type: {graphrag_config_defaults.input.storage.type} # or blob
     base_dir: "{graphrag_config_defaults.input.storage.base_dir}"
-  file_type: {graphrag_config_defaults.input.file_type.value} # [csv, text, json]
+  file_type: {graphrag_config_defaults.input.file_type} # [csv, text, json]
   
 
 chunks:
@@ -73,15 +73,15 @@ chunks:
 ## connection_string and container_name must be provided
 
 output:
-  type: {graphrag_config_defaults.output.type.value} # [file, blob, cosmosdb]
+  type: {graphrag_config_defaults.output.type} # [file, blob, cosmosdb]
   base_dir: "{graphrag_config_defaults.output.base_dir}"
     
 cache:
-  type: {graphrag_config_defaults.cache.type.value} # [file, blob, cosmosdb]
+  type: {graphrag_config_defaults.cache.type} # [file, blob, cosmosdb]
   base_dir: "{graphrag_config_defaults.cache.base_dir}"
 
 reporting:
-  type: {graphrag_config_defaults.reporting.type.value} # [file, blob]
+  type: {graphrag_config_defaults.reporting.type} # [file, blob]
   base_dir: "{graphrag_config_defaults.reporting.base_dir}"
 
 vector_store:
@@ -110,8 +110,8 @@ summarize_descriptions:
 
 extract_graph_nlp:
   text_analyzer:
-    extractor_type: {graphrag_config_defaults.extract_graph_nlp.text_analyzer.extractor_type.value} # [regex_english, syntactic_parser, cfg]
-  async_mode: {graphrag_config_defaults.extract_graph_nlp.async_mode.value} # or asyncio
+    extractor_type: {graphrag_config_defaults.extract_graph_nlp.text_analyzer.extractor_type} # [regex_english, syntactic_parser, cfg]
+  async_mode: {graphrag_config_defaults.extract_graph_nlp.async_mode} # or asyncio
 
 cluster_graph:
   max_cluster_size: {graphrag_config_defaults.cluster_graph.max_cluster_size}

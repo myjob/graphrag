@@ -9,7 +9,6 @@ import logging
 
 import pytest
 
-from graphrag.config.enums import ReportingType
 from graphrag.logger.blob_workflow_logger import BlobWorkflowLogger
 from graphrag.logger.factory import LoggerFactory
 
@@ -27,7 +26,7 @@ def test_create_blob_logger():
         "base_dir": "testbasedir",
         "container_name": "testcontainer",
     }
-    logger = LoggerFactory.create_logger(ReportingType.blob.value, kwargs)
+    logger = LoggerFactory.create_logger("blob", kwargs)
     assert isinstance(logger, BlobWorkflowLogger)
 
 
@@ -56,8 +55,8 @@ def test_register_and_create_custom_logger():
 def test_get_logger_types():
     logger_types = LoggerFactory.get_logger_types()
     # Check that built-in types are registered
-    assert ReportingType.file.value in logger_types
-    assert ReportingType.blob.value in logger_types
+    assert "file" in logger_types
+    assert "blob" in logger_types
 
 
 def test_create_unknown_logger():

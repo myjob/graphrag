@@ -9,7 +9,6 @@ import sys
 
 import pytest
 
-from graphrag.config.enums import StorageType
 from graphrag.storage.blob_pipeline_storage import BlobPipelineStorage
 from graphrag.storage.cosmosdb_pipeline_storage import CosmosDBPipelineStorage
 from graphrag.storage.factory import StorageFactory
@@ -31,7 +30,7 @@ def test_create_blob_storage():
         "base_dir": "testbasedir",
         "container_name": "testcontainer",
     }
-    storage = StorageFactory.create_storage(StorageType.blob.value, kwargs)
+    storage = StorageFactory.create_storage("blob", kwargs)
     assert isinstance(storage, BlobPipelineStorage)
 
 
@@ -46,19 +45,19 @@ def test_create_cosmosdb_storage():
         "base_dir": "testdatabase",
         "container_name": "testcontainer",
     }
-    storage = StorageFactory.create_storage(StorageType.cosmosdb.value, kwargs)
+    storage = StorageFactory.create_storage("cosmosdb", kwargs)
     assert isinstance(storage, CosmosDBPipelineStorage)
 
 
 def test_create_file_storage():
     kwargs = {"type": "file", "base_dir": "/tmp/teststorage"}
-    storage = StorageFactory.create_storage(StorageType.file.value, kwargs)
+    storage = StorageFactory.create_storage("file", kwargs)
     assert isinstance(storage, FilePipelineStorage)
 
 
 def test_create_memory_storage():
     kwargs = {}  # MemoryPipelineStorage doesn't accept any constructor parameters
-    storage = StorageFactory.create_storage(StorageType.memory.value, kwargs)
+    storage = StorageFactory.create_storage("memory", kwargs)
     assert isinstance(storage, MemoryPipelineStorage)
 
 
@@ -90,10 +89,10 @@ def test_register_and_create_custom_storage():
 def test_get_storage_types():
     storage_types = StorageFactory.get_storage_types()
     # Check that built-in types are registered
-    assert StorageType.file.value in storage_types
-    assert StorageType.memory.value in storage_types
-    assert StorageType.blob.value in storage_types
-    assert StorageType.cosmosdb.value in storage_types
+    assert "file" in storage_types
+    assert "memory" in storage_types
+    assert "blob" in storage_types
+    assert "cosmosdb" in storage_types
 
 
 def test_create_unknown_storage():

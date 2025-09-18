@@ -233,11 +233,11 @@ def calculate_modularity(
     max_cluster_size: int = 10,
     random_seed: int = 0xDEADBEEF,
     use_root_modularity: bool = True,
-    modularity_metric: ModularityMetric = ModularityMetric.WeightedComponents,
+    modularity_metric: ModularityMetric = "weighted_components",
 ) -> float:
     """Calculate modularity of the graph based on the modularity metric type."""
     match modularity_metric:
-        case ModularityMetric.Graph:
+        case "graph":
             logger.info("Calculating graph modularity")
             return calculate_graph_modularity(
                 graph,
@@ -245,7 +245,7 @@ def calculate_modularity(
                 random_seed=random_seed,
                 use_root_modularity=use_root_modularity,
             )
-        case ModularityMetric.LCC:
+        case "lcc":
             logger.info("Calculating LCC modularity")
             return calculate_lcc_modularity(
                 graph,
@@ -253,7 +253,7 @@ def calculate_modularity(
                 random_seed=random_seed,
                 use_root_modularity=use_root_modularity,
             )
-        case ModularityMetric.WeightedComponents:
+        case "weighted_components":
             logger.info("Calculating weighted-components modularity")
             return calculate_weighted_modularity(
                 graph,

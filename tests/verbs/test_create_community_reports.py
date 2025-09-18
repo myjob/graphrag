@@ -3,7 +3,6 @@
 
 
 from graphrag.config.create_graphrag_config import create_graphrag_config
-from graphrag.config.enums import ModelType
 from graphrag.data_model.schemas import COMMUNITY_REPORTS_FINAL_COLUMNS
 from graphrag.index.operations.summarize_communities.community_reports_extractor import (
     CommunityReportResponse,
@@ -55,7 +54,7 @@ async def test_create_community_reports():
     llm_settings = config.get_language_model_config(
         config.community_reports.model_id
     ).model_dump()
-    llm_settings["type"] = ModelType.MockChat
+    llm_settings["type"] = "mock_chat"
     llm_settings["responses"] = MOCK_RESPONSES
     llm_settings["parse_json"] = True
     config.community_reports.strategy = {

@@ -31,7 +31,7 @@ async def extract_graph(
     text_column: str,
     id_column: str,
     strategy: dict[str, Any] | None,
-    async_mode: AsyncType = AsyncType.AsyncIO,
+    async_mode: AsyncType = "asyncio",
     entity_types=DEFAULT_ENTITY_TYPES,
     num_threads: int = 4,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -40,9 +40,7 @@ async def extract_graph(
     if entity_types is None:
         entity_types = DEFAULT_ENTITY_TYPES
     strategy = strategy or {}
-    strategy_exec = _load_strategy(
-        strategy.get("type", ExtractEntityStrategyType.graph_intelligence)
-    )
+    strategy_exec = _load_strategy(strategy.get("type", "graph_intelligence"))
     strategy_config = {**strategy}
 
     num_started = 0
@@ -85,7 +83,7 @@ async def extract_graph(
 def _load_strategy(strategy_type: ExtractEntityStrategyType) -> EntityExtractStrategy:
     """Load strategy method definition."""
     match strategy_type:
-        case ExtractEntityStrategyType.graph_intelligence:
+        case "graph_intelligence":
             from graphrag.index.operations.extract_graph.graph_intelligence_strategy import (
                 run_graph_intelligence,
             )

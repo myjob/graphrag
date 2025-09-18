@@ -87,7 +87,7 @@ async def create_community_reports(
     callbacks: WorkflowCallbacks,
     cache: PipelineCache,
     summarization_strategy: dict,
-    async_mode: AsyncType = AsyncType.AsyncIO,
+    async_mode: AsyncType = "asyncio",
     num_threads: int = 4,
 ) -> pd.DataFrame:
     """All the steps to transform community reports."""

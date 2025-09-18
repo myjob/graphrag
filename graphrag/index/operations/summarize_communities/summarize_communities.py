@@ -36,7 +36,7 @@ async def summarize_communities(
     cache: PipelineCache,
     strategy: dict,
     max_input_length: int,
-    async_mode: AsyncType = AsyncType.AsyncIO,
+    async_mode: AsyncType = "asyncio",
     num_threads: int = 4,
 ):
     """Generate community summaries."""
@@ -117,7 +117,7 @@ def load_strategy(
 ) -> CommunityReportsStrategy:
     """Load strategy method definition."""
     match strategy:
-        case CreateCommunityReportsStrategyType.graph_intelligence:
+        case "graph_intelligence":
             from graphrag.index.operations.summarize_communities.strategies import (
                 run_graph_intelligence,
             )

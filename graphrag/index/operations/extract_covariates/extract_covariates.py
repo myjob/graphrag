@@ -36,7 +36,7 @@ async def extract_covariates(
     column: str,
     covariate_type: str,
     strategy: dict[str, Any] | None,
-    async_mode: AsyncType = AsyncType.AsyncIO,
+    async_mode: AsyncType = "asyncio",
     entity_types: list[str] | None = None,
     num_threads: int = 4,
 ):

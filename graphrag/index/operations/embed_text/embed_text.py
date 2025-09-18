@@ -4,8 +4,7 @@
 """A module containing embed_text, load_strategy and create_row_from_embedding_data methods definition."""
 
 import logging
-from enum import Enum
-from typing import Any
+from typing import Any, Literal
 
 import numpy as np
 import pandas as pd
@@ -24,15 +23,8 @@ logger = logging.getLogger(__name__)
 DEFAULT_EMBEDDING_BATCH_SIZE = 500
 
 
-class TextEmbedStrategyType(str, Enum):
-    """TextEmbedStrategyType class definition."""
-
-    openai = "openai"
-    mock = "mock"
-
-    def __repr__(self):
-        """Get a string representation."""
-        return f'"{self.value}"'
+TextEmbedStrategyType = Literal["openai", "mock"]
+"""TextEmbedStrategyType class definition."""
 
 
 async def embed_text(
@@ -209,13 +201,13 @@ def _get_collection_name(vector_store_config: dict, embedding_name: str) -> str:
 def load_strategy(strategy: TextEmbedStrategyType) -> TextEmbeddingStrategy:
     """Load strategy method definition."""
     match strategy:
-        case TextEmbedStrategyType.openai:
+        case "openai":
             from graphrag.index.operations.embed_text.strategies.openai import (
                 run as run_openai,
             )
 
             return run_openai
-        case TextEmbedStrategyType.mock:
+        case "mock":
             from graphrag.index.operations.embed_text.strategies.mock import (
                 run as run_mock,
             )

@@ -35,7 +35,7 @@ def test_get_num_total_array():
 
 
 def test_load_strategy_tokens():
-    strategy_type = ChunkStrategyType.tokens
+    strategy_type = "tokens"
 
     strategy_loaded = load_strategy(strategy_type)
 
@@ -43,7 +43,7 @@ def test_load_strategy_tokens():
 
 
 def test_load_strategy_sentence():
-    strategy_type = ChunkStrategyType.sentence
+    strategy_type = "sentence"
 
     strategy_loaded = load_strategy(strategy_type)
 
@@ -167,7 +167,7 @@ def test_chunk_text(mock_progress_ticker, mock_run_strategy, mock_load_strategy)
     size = 10
     overlap = 2
     encoding_model = "model"
-    strategy = ChunkStrategyType.sentence
+    strategy = "sentence"
     callbacks = Mock()
     callbacks.progress = Mock()
 

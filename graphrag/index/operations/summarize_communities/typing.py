@@ -4,8 +4,7 @@
 """A module containing 'Finding' and 'CommunityReport' models."""
 
 from collections.abc import Awaitable, Callable
-from enum import Enum
-from typing import Any
+from typing import Any, Literal
 
 from typing_extensions import TypedDict
 
@@ -53,11 +52,5 @@ CommunityReportsStrategy = Callable[
 ]
 
 
-class CreateCommunityReportsStrategyType(str, Enum):
-    """CreateCommunityReportsStrategyType class definition."""
-
-    graph_intelligence = "graph_intelligence"
-
-    def __repr__(self):
-        """Get a string representation."""
-        return f'"{self.value}"'
+CreateCommunityReportsStrategyType = Literal["graph_intelligence"]
+"""CreateCommunityReportsStrategyType class definition."""

@@ -39,12 +39,8 @@ class ExtractGraphConfig(BaseModel):
         self, root_dir: str, model_config: LanguageModelConfig
     ) -> dict:
         """Get the resolved entity extraction strategy."""
-        from graphrag.index.operations.extract_graph.typing import (
-            ExtractEntityStrategyType,
-        )
-
         return self.strategy or {
-            "type": ExtractEntityStrategyType.graph_intelligence,
+            "type": "graph_intelligence",
             "llm": model_config.model_dump(),
             "extraction_prompt": (Path(root_dir) / self.prompt).read_text(
                 encoding="utf-8"

@@ -14,7 +14,6 @@ from graphrag.config.enums import (
     CacheType,
     ChunkStrategyType,
     InputFileType,
-    ModelType,
     NounPhraseExtractorType,
     ReportingType,
     StorageType,
@@ -26,13 +25,13 @@ from graphrag.index.operations.build_noun_graph.np_extractors.stop_words import 
 
 DEFAULT_OUTPUT_BASE_DIR = "output"
 DEFAULT_CHAT_MODEL_ID = "default_chat_model"
-DEFAULT_CHAT_MODEL_TYPE = ModelType.OpenAIChat
+DEFAULT_CHAT_MODEL_TYPE = "openai_chat"
 DEFAULT_CHAT_MODEL = "gpt-4o"
-DEFAULT_CHAT_MODEL_AUTH_TYPE = AuthType.APIKey
+DEFAULT_CHAT_MODEL_AUTH_TYPE = "api_key"
 DEFAULT_EMBEDDING_MODEL_ID = "default_embedding_model"
-DEFAULT_EMBEDDING_MODEL_TYPE = ModelType.OpenAIEmbedding
+DEFAULT_EMBEDDING_MODEL_TYPE = "openai_embedding"
 DEFAULT_EMBEDDING_MODEL = "text-embedding-ada-002"
-DEFAULT_EMBEDDING_MODEL_AUTH_TYPE = AuthType.APIKey
+DEFAULT_EMBEDDING_MODEL_AUTH_TYPE = "api_key"
 DEFAULT_VECTOR_STORE_ID = "default_vector_store"
 
 ENCODING_MODEL = "o200k_base"
@@ -54,7 +53,7 @@ class BasicSearchDefaults:
 class CacheDefaults:
     """Default values for cache."""
 
-    type: ClassVar[CacheType] = CacheType.file
+    type: ClassVar[CacheType] = "file"
     base_dir: str = "cache"
     connection_string: None = None
     container_name: None = None
@@ -68,7 +67,7 @@ class ChunksDefaults:
 
     size: int = 1200
     overlap: int = 100
-    strategy: ClassVar[ChunkStrategyType] = ChunkStrategyType.tokens
+    strategy: ClassVar[ChunkStrategyType] = "tokens"
     encoding_model: str = ENCODING_MODEL
     prepend_metadata: bool = False
     chunk_size_includes_metadata: bool = False
@@ -168,9 +167,7 @@ class ExtractGraphDefaults:
 class TextAnalyzerDefaults:
     """Default values for text analyzer."""
 
-    extractor_type: ClassVar[NounPhraseExtractorType] = (
-        NounPhraseExtractorType.RegexEnglish
-    )
+    extractor_type: ClassVar[NounPhraseExtractorType] = "regex_english"
     model_name: str = "en_core_web_md"
     max_word_length: int = 15
     word_delimiter: str = " "
@@ -199,7 +196,7 @@ class ExtractGraphNLPDefaults:
     normalize_edge_weights: bool = True
     text_analyzer: TextAnalyzerDefaults = field(default_factory=TextAnalyzerDefaults)
     concurrent_requests: int = 25
-    async_mode: AsyncType = AsyncType.Threaded
+    async_mode: AsyncType = "threaded"
 
 
 @dataclass
@@ -225,7 +222,7 @@ class GlobalSearchDefaults:
 class StorageDefaults:
     """Default values for storage."""
 
-    type: ClassVar[StorageType] = StorageType.file
+    type: ClassVar[StorageType] = "file"
     base_dir: str = DEFAULT_OUTPUT_BASE_DIR
     connection_string: None = None
     container_name: None = None
@@ -245,7 +242,7 @@ class InputDefaults:
     """Default values for input."""
 
     storage: InputStorageDefaults = field(default_factory=InputStorageDefaults)
-    file_type: ClassVar[InputFileType] = InputFileType.text
+    file_type: ClassVar[InputFileType] = "text"
     encoding: str = "utf-8"
     file_pattern: str = ""
     text_column: str = "text"
@@ -258,7 +255,7 @@ class LanguageModelDefaults:
     """Default values for language model."""
 
     api_key: None = None
-    auth_type: ClassVar[AuthType] = AuthType.APIKey
+    auth_type: ClassVar[AuthType] = "api_key"
     encoding_model: str = ""
     max_tokens: int | None = None
     temperature: float = 0
@@ -283,7 +280,7 @@ class LanguageModelDefaults:
     max_retry_wait: float = 10.0
     concurrent_requests: int = 25
     responses: None = None
-    async_mode: AsyncType = AsyncType.Threaded
+    async_mode: AsyncType = "threaded"
 
 
 @dataclass
@@ -325,7 +322,7 @@ class PruneGraphDefaults:
 class ReportingDefaults:
     """Default values for reporting."""
 
-    type: ClassVar[ReportingType] = ReportingType.file
+    type: ClassVar[ReportingType] = "file"
     base_dir: str = "logs"
     connection_string: None = None
     container_name: None = None
@@ -363,7 +360,7 @@ class UpdateIndexOutputDefaults(StorageDefaults):
 class VectorStoreDefaults:
     """Default values for vector stores."""
 
-    type: ClassVar[str] = VectorStoreType.LanceDB.value
+    type: ClassVar[VectorStoreType] = "lancedb"
     db_uri: str = str(Path(DEFAULT_OUTPUT_BASE_DIR) / "lancedb")
     container_name: str = "default"
     overwrite: bool = True

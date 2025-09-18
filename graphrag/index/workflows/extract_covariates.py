@@ -67,7 +67,7 @@ async def extract_covariates(
     cache: PipelineCache,
     covariate_type: str,
     extraction_strategy: dict[str, Any] | None,
-    async_mode: AsyncType = AsyncType.AsyncIO,
+    async_mode: AsyncType = "asyncio",
     entity_types: list[str] | None = None,
     num_threads: int = 4,
 ) -> pd.DataFrame:

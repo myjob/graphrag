@@ -5,8 +5,7 @@
 
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
-from enum import Enum
-from typing import Any
+from typing import Any, Literal
 
 import networkx as nx
 
@@ -46,12 +45,5 @@ EntityExtractStrategy = Callable[
 ]
 
 
-class ExtractEntityStrategyType(str, Enum):
-    """ExtractEntityStrategyType class definition."""
-
-    graph_intelligence = "graph_intelligence"
-    nltk = "nltk"
-
-    def __repr__(self):
-        """Get a string representation."""
-        return f'"{self.value}"'
+ExtractEntityStrategyType = Literal["graph_intelligence", "nltk"]
+"""ExtractEntityStrategyType class definition."""

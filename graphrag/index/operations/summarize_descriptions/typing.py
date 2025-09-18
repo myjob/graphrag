@@ -5,8 +5,7 @@
 
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
-from enum import Enum
-from typing import Any, NamedTuple
+from typing import Any, Literal, NamedTuple
 
 from graphrag.cache.pipeline_cache import PipelineCache
 
@@ -38,11 +37,5 @@ class DescriptionSummarizeRow(NamedTuple):
     graph: Any
 
 
-class SummarizeStrategyType(str, Enum):
-    """SummarizeStrategyType class definition."""
-
-    graph_intelligence = "graph_intelligence"
-
-    def __repr__(self):
-        """Get a string representation."""
-        return f'"{self.value}"'
+SummarizeStrategyType = Literal["graph_intelligence"]
+"""SummarizeStrategyType class definition."""

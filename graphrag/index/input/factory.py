@@ -9,7 +9,6 @@ from typing import cast
 
 import pandas as pd
 
-from graphrag.config.enums import InputFileType
 from graphrag.config.models.input_config import InputConfig
 from graphrag.index.input.csv import load_csv
 from graphrag.index.input.json import load_json
@@ -18,9 +17,9 @@ from graphrag.storage.pipeline_storage import PipelineStorage
 
 logger = logging.getLogger(__name__)
 loaders: dict[str, Callable[..., Awaitable[pd.DataFrame]]] = {
-    InputFileType.text: load_text,
-    InputFileType.csv: load_csv,
-    InputFileType.json: load_json,
+    "text": load_text,
+    "csv": load_csv,
+    "json": load_json,
 }
 
 

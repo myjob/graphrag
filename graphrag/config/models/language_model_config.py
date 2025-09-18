@@ -43,15 +43,15 @@ class LanguageModelConfig(BaseModel):
         ApiKeyMissingError
             If the API key is missing and is required.
         """
-        if self.auth_type == AuthType.APIKey and (
+        if self.auth_type == "api_key" and (
             self.api_key is None or self.api_key.strip() == ""
         ):
             raise ApiKeyMissingError(
                 self.type,
-                self.auth_type.value,
+                self.auth_type,
             )
 
-        if (self.auth_type == AuthType.AzureManagedIdentity) and (
+        if (self.auth_type == "azure_managed_identity") and (
             self.api_key is not None and self.api_key.strip() != ""
         ):
             msg = "API Key should not be provided when using Azure Managed Identity. Please rerun `graphrag init` and remove the api_key when using Azure Managed Identity."
@@ -73,8 +73,8 @@ class LanguageModelConfig(BaseModel):
         ConflictingSettingsError
             If the Azure authentication type conflicts with the model being used.
         """
-        if self.auth_type == AuthType.AzureManagedIdentity and (
-            self.type == ModelType.OpenAIChat or self.type == ModelType.OpenAIEmbedding
+        if self.auth_type == "azure_managed_identity" and (
+            self.type == "openai_chat" or self.type == "openai_embedding"
         ):
             msg = f"auth_type of azure_managed_identity is not supported for model type {self.type}. Please rerun `graphrag init` and set the auth_type to api_key."
             raise ConflictingSettingsError(msg)
@@ -127,8 +127,7 @@ class LanguageModelConfig(BaseModel):
             If the API base is missing and is required.
         """
         if (
-            self.type == ModelType.AzureOpenAIChat
-            or self.type == ModelType.AzureOpenAIEmbedding
+            self.type == "azure_openai_chat" or self.type == "azure_openai_embedding"
         ) and (self.api_base is None or self.api_base.strip() == ""):
             raise AzureApiBaseMissingError(self.type)
 
@@ -148,8 +147,7 @@ class LanguageModelConfig(BaseModel):
             If the API base is missing and is required.
         """
         if (
-            self.type == ModelType.AzureOpenAIChat
-            or self.type == ModelType.AzureOpenAIEmbedding
+            self.type == "azure_openai_chat" or self.type == "azure_openai_embedding"
         ) and (self.api_version is None or self.api_version.strip() == ""):
             raise AzureApiVersionMissingError(self.type)
 
@@ -169,8 +167,7 @@ class LanguageModelConfig(BaseModel):
             If the deployment name is missing and is required.
         """
         if (
-            self.type == ModelType.AzureOpenAIChat
-            or self.type == ModelType.AzureOpenAIEmbedding
+            self.type == "azure_openai_chat" or self.type == "azure_openai_embedding"
         ) and (self.deployment_name is None or self.deployment_name.strip() == ""):
             raise AzureDeploymentNameMissingError(self.type)
 

@@ -71,11 +71,11 @@ async def load_docs_in_chunks(
         logger.warning(f"Limit out of range, using default number of chunks: {LIMIT}")  # noqa: G004
         limit = LIMIT
 
-    if select_method == DocSelectionType.TOP:
+    if select_method == "top":
         chunks_df = chunks_df[:limit]
-    elif select_method == DocSelectionType.RANDOM:
+    elif select_method == "random":
         chunks_df = chunks_df.sample(n=limit)
-    elif select_method == DocSelectionType.AUTO:
+    elif select_method == "auto":
         if k is None or k <= 0:
             msg = "k must be an integer > 0"
             raise ValueError(msg)

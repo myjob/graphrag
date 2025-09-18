@@ -6,7 +6,6 @@
 from collections.abc import Callable
 from typing import Any, ClassVar
 
-from graphrag.config.enums import ModelType
 from graphrag.language_model.protocol.base import ChatModel, EmbeddingModel
 from graphrag.language_model.providers.fnllm.models import (
     AzureOpenAIChatFNLLM,
@@ -100,16 +99,14 @@ class ModelFactory:
 
 # --- Register default implementations ---
 ModelFactory.register_chat(
-    ModelType.AzureOpenAIChat.value, lambda **kwargs: AzureOpenAIChatFNLLM(**kwargs)
+    "azure_openai_chat", lambda **kwargs: AzureOpenAIChatFNLLM(**kwargs)
 )
-ModelFactory.register_chat(
-    ModelType.OpenAIChat.value, lambda **kwargs: OpenAIChatFNLLM(**kwargs)
-)
+ModelFactory.register_chat("openai_chat", lambda **kwargs: OpenAIChatFNLLM(**kwargs))
 
 ModelFactory.register_embedding(
-    ModelType.AzureOpenAIEmbedding.value,
+    "azure_openai_embedding",
     lambda **kwargs: AzureOpenAIEmbeddingFNLLM(**kwargs),
 )
 ModelFactory.register_embedding(
-    ModelType.OpenAIEmbedding.value, lambda **kwargs: OpenAIEmbeddingFNLLM(**kwargs)
+    "openai_embedding", lambda **kwargs: OpenAIEmbeddingFNLLM(**kwargs)
 )

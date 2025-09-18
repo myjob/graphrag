@@ -5,7 +5,6 @@
 
 from typing import ClassVar
 
-from graphrag.config.enums import NounPhraseExtractorType
 from graphrag.config.models.extract_graph_nlp_config import TextAnalyzerConfig
 from graphrag.index.operations.build_noun_graph.np_extractors.base import (
     BaseNounPhraseExtractor,
@@ -42,7 +41,7 @@ class NounPhraseExtractorFactory:
         if exclude_nouns is None:
             exclude_nouns = EN_STOP_WORDS
         match np_extractor_type:
-            case NounPhraseExtractorType.Syntactic:
+            case "syntactic_parser":
                 return SyntacticNounPhraseExtractor(
                     model_name=config.model_name,
                     max_word_length=config.max_word_length,
@@ -52,7 +51,7 @@ class NounPhraseExtractorFactory:
                     exclude_nouns=exclude_nouns,
                     word_delimiter=config.word_delimiter,
                 )
-            case NounPhraseExtractorType.CFG:
+            case "cfg":
                 grammars = {}
                 for key, value in config.noun_phrase_grammars.items():
                     grammars[tuple(key.split(","))] = value
@@ -67,7 +66,7 @@ class NounPhraseExtractorFactory:
                     noun_phrase_grammars=grammars,
                     noun_phrase_tags=config.noun_phrase_tags,
                 )
-            case NounPhraseExtractorType.RegexEnglish:
+            case "regex_english":
                 return RegexENNounPhraseExtractor(
                     exclude_nouns=exclude_nouns,
                     max_word_length=config.max_word_length,

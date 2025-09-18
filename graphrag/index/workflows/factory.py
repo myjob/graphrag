@@ -40,7 +40,7 @@ class PipelineFactory:
     def create_pipeline(
         cls,
         config: GraphRagConfig,
-        method: IndexingMethod | str = IndexingMethod.Standard,
+        method: IndexingMethod | str = "standard",
     ) -> Pipeline:
         """Create a pipeline generator."""
         workflows = config.workflows or cls.pipelines.get(method, [])
@@ -82,16 +82,14 @@ _update_workflows = [
     "update_clean_state",
 ]
 PipelineFactory.register_pipeline(
-    IndexingMethod.Standard, ["load_input_documents", *_standard_workflows]
+    "standard", ["load_input_documents", *_standard_workflows]
 )
+PipelineFactory.register_pipeline("fast", ["load_input_documents", *_fast_workflows])
 PipelineFactory.register_pipeline(
-    IndexingMethod.Fast, ["load_input_documents", *_fast_workflows]
-)
-PipelineFactory.register_pipeline(
-    IndexingMethod.StandardUpdate,
+    "standard-update",
     ["load_update_documents", *_standard_workflows, *_update_workflows],
 )
 PipelineFactory.register_pipeline(
-    IndexingMethod.FastUpdate,
+    "fast-update",
     ["load_update_documents", *_fast_workflows, *_update_workflows],
 )

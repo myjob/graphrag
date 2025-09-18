@@ -14,7 +14,6 @@ from graphrag.cache.json_pipeline_cache import JsonPipelineCache
 from graphrag.cache.memory_pipeline_cache import InMemoryCache
 from graphrag.cache.noop_pipeline_cache import NoopPipelineCache
 from graphrag.cache.pipeline_cache import PipelineCache
-from graphrag.config.enums import CacheType
 
 # cspell:disable-next-line well-known-key
 WELL_KNOWN_BLOB_STORAGE_KEY = "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;"
@@ -24,19 +23,19 @@ WELL_KNOWN_COSMOS_CONNECTION_STRING = "AccountEndpoint=https://127.0.0.1:8081/;A
 
 def test_create_noop_cache():
     kwargs = {}
-    cache = CacheFactory.create_cache(CacheType.none.value, kwargs)
+    cache = CacheFactory.create_cache("none", kwargs)
     assert isinstance(cache, NoopPipelineCache)
 
 
 def test_create_memory_cache():
     kwargs = {}
-    cache = CacheFactory.create_cache(CacheType.memory.value, kwargs)
+    cache = CacheFactory.create_cache("memory", kwargs)
     assert isinstance(cache, InMemoryCache)
 
 
 def test_create_file_cache():
     kwargs = {"root_dir": "/tmp", "base_dir": "testcache"}
-    cache = CacheFactory.create_cache(CacheType.file.value, kwargs)
+    cache = CacheFactory.create_cache("file", kwargs)
     assert isinstance(cache, JsonPipelineCache)
 
 
@@ -46,7 +45,7 @@ def test_create_blob_cache():
         "container_name": "testcontainer",
         "base_dir": "testcache",
     }
-    cache = CacheFactory.create_cache(CacheType.blob.value, kwargs)
+    cache = CacheFactory.create_cache("blob", kwargs)
     assert isinstance(cache, JsonPipelineCache)
 
 
@@ -60,7 +59,7 @@ def test_create_cosmosdb_cache():
         "base_dir": "testdatabase",
         "container_name": "testcontainer",
     }
-    cache = CacheFactory.create_cache(CacheType.cosmosdb.value, kwargs)
+    cache = CacheFactory.create_cache("cosmosdb", kwargs)
     assert isinstance(cache, JsonPipelineCache)
 
 
@@ -91,11 +90,11 @@ def test_register_and_create_custom_cache():
 def test_get_cache_types():
     cache_types = CacheFactory.get_cache_types()
     # Check that built-in types are registered
-    assert CacheType.none.value in cache_types
-    assert CacheType.memory.value in cache_types
-    assert CacheType.file.value in cache_types
-    assert CacheType.blob.value in cache_types
-    assert CacheType.cosmosdb.value in cache_types
+    assert "none" in cache_types
+    assert "memory" in cache_types
+    assert "file" in cache_types
+    assert "blob" in cache_types
+    assert "cosmosdb" in cache_types
 
 
 def test_create_unknown_cache():
@@ -105,30 +104,14 @@ def test_create_unknown_cache():
 
 def test_is_supported_type():
     # Test built-in types
-    assert CacheFactory.is_supported_type(CacheType.none.value)
-    assert CacheFactory.is_supported_type(CacheType.memory.value)
-    assert CacheFactory.is_supported_type(CacheType.file.value)
-    assert CacheFactory.is_supported_type(CacheType.blob.value)
-    assert CacheFactory.is_supported_type(CacheType.cosmosdb.value)
+    assert CacheFactory.is_supported_type("none")
+    assert CacheFactory.is_supported_type("memory")
+    assert CacheFactory.is_supported_type("file")
+    assert CacheFactory.is_supported_type("blob")
+    assert CacheFactory.is_supported_type("cosmosdb")
 
     # Test unknown type
     assert not CacheFactory.is_supported_type("unknown")
-
-
-def test_enum_and_string_compatibility():
-    """Test that both enum and string types work for cache creation."""
-    kwargs = {}
-
-    # Test with enum
-    cache_enum = CacheFactory.create_cache(CacheType.memory, kwargs)
-    assert isinstance(cache_enum, InMemoryCache)
-
-    # Test with string
-    cache_str = CacheFactory.create_cache("memory", kwargs)
-    assert isinstance(cache_str, InMemoryCache)
-
-    # Both should create the same type
-    assert type(cache_enum) is type(cache_str)
 
 
 def test_register_class_directly_works():

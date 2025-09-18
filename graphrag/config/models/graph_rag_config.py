@@ -11,7 +11,6 @@ from pydantic import BaseModel, Field, model_validator
 
 import graphrag.config.defaults as defs
 from graphrag.config.defaults import graphrag_config_defaults
-from graphrag.config.enums import VectorStoreType
 from graphrag.config.errors import LanguageModelConfigMissingError
 from graphrag.config.models.basic_search_config import BasicSearchConfig
 from graphrag.config.models.cache_config import CacheConfig
@@ -95,14 +94,14 @@ class GraphRagConfig(BaseModel):
     def _validate_input_pattern(self) -> None:
         """Validate the input file pattern based on the specified type."""
         if len(self.input.file_pattern) == 0:
-            if self.input.file_type == defs.InputFileType.text:
+            if self.input.file_type == "text":
                 self.input.file_pattern = ".*\\.txt$"
             else:
-                self.input.file_pattern = f".*\\.{self.input.file_type.value}$"
+                self.input.file_pattern = f".*\\.{self.input.file_type}$"
 
     def _validate_input_base_dir(self) -> None:
         """Validate the input base directory."""
-        if self.input.storage.type == defs.StorageType.file:
+        if self.input.storage.type == "file":
             if self.input.storage.base_dir.strip() == "":
                 msg = "input storage base directory is required for file input storage. Please rerun `graphrag init` and set the input storage configuration."
                 raise ValueError(msg)
@@ -124,7 +123,7 @@ class GraphRagConfig(BaseModel):
 
     def _validate_output_base_dir(self) -> None:
         """Validate the output base directory."""
-        if self.output.type == defs.StorageType.file:
+        if self.output.type == "file":
             if self.output.base_dir.strip() == "":
                 msg = "output base directory is required for file output. Please rerun `graphrag init` and set the output configuration."
                 raise ValueError(msg)
@@ -141,7 +140,7 @@ class GraphRagConfig(BaseModel):
         """Validate the outputs dict base directories."""
         if self.outputs:
             for output in self.outputs.values():
-                if output.type == defs.StorageType.file:
+                if output.type == "file":
                     if output.base_dir.strip() == "":
                         msg = "Output base directory is required for file output. Please rerun `graphrag init` and set the output configuration."
                         raise ValueError(msg)
@@ -159,7 +158,7 @@ class GraphRagConfig(BaseModel):
 
     def _validate_update_index_output_base_dir(self) -> None:
         """Validate the update index output base directory."""
-        if self.update_index_output.type == defs.StorageType.file:
+        if self.update_index_output.type == "file":
             if self.update_index_output.base_dir.strip() == "":
                 msg = "update_index_output base directory is required for file output. Please rerun `graphrag init` and set the update_index_output configuration."
                 raise ValueError(msg)
@@ -179,7 +178,7 @@ class GraphRagConfig(BaseModel):
 
     def _validate_reporting_base_dir(self) -> None:
         """Validate the reporting base directory."""
-        if self.reporting.type == defs.ReportingType.file:
+        if self.reporting.type == "file":
             if self.reporting.base_dir.strip() == "":
                 msg = "Reporting base directory is required for file reporting. Please rerun `graphrag init` and set the reporting configuration."
                 raise ValueError(msg)
@@ -281,7 +280,7 @@ class GraphRagConfig(BaseModel):
     def _validate_vector_store_db_uri(self) -> None:
         """Validate the vector store configuration."""
         for store in self.vector_store.values():
-            if store.type == VectorStoreType.LanceDB:
+            if store.type == "lancedb":
                 if not store.db_uri or store.db_uri.strip == "":
                     msg = "Vector store URI is required for LanceDB. Please rerun `graphrag init` and set the vector store configuration."
                     raise ValueError(msg)

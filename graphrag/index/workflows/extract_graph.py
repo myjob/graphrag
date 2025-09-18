@@ -85,7 +85,7 @@ async def extract_graph(
     cache: PipelineCache,
     extraction_strategy: dict[str, Any] | None = None,
     extraction_num_threads: int = 4,
-    extraction_async_mode: AsyncType = AsyncType.AsyncIO,
+    extraction_async_mode: AsyncType = "asyncio",
     entity_types: list[str] | None = None,
     summarization_strategy: dict[str, Any] | None = None,
     summarization_num_threads: int = 4,

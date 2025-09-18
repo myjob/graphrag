@@ -7,7 +7,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, ClassVar
 
-from graphrag.config.enums import VectorStoreType
 from graphrag.vector_stores.azure_ai_search import AzureAISearchVectorStore
 from graphrag.vector_stores.cosmosdb import CosmosDBVectorStore
 from graphrag.vector_stores.lancedb import LanceDBVectorStore
@@ -81,8 +80,6 @@ class VectorStoreFactory:
 
 
 # --- register built-in vector store implementations ---
-VectorStoreFactory.register(VectorStoreType.LanceDB.value, LanceDBVectorStore)
-VectorStoreFactory.register(
-    VectorStoreType.AzureAISearch.value, AzureAISearchVectorStore
-)
-VectorStoreFactory.register(VectorStoreType.CosmosDB.value, CosmosDBVectorStore)
+VectorStoreFactory.register("lancedb", LanceDBVectorStore)
+VectorStoreFactory.register("azure_ai_search", AzureAISearchVectorStore)
+VectorStoreFactory.register("cosmos_db", CosmosDBVectorStore)

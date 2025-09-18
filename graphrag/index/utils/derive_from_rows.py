@@ -36,17 +36,17 @@ async def derive_from_rows(
     transform: Callable[[pd.Series], Awaitable[ItemType]],
     callbacks: WorkflowCallbacks | None = None,
     num_threads: int = 4,
-    async_type: AsyncType = AsyncType.AsyncIO,
+    async_type: AsyncType = "asyncio",
     progress_msg: str = "",
 ) -> list[ItemType | None]:
     """Apply a generic transform function to each row. Any errors will be reported and thrown."""
     callbacks = callbacks or NoopWorkflowCallbacks()
     match async_type:
-        case AsyncType.AsyncIO:
+        case "asyncio":
             return await derive_from_rows_asyncio(
                 input, transform, callbacks, num_threads, progress_msg
             )
-        case AsyncType.Threaded:
+        case "threaded":
             return await derive_from_rows_asyncio_threads(
                 input, transform, callbacks, num_threads, progress_msg
             )

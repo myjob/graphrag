@@ -39,12 +39,8 @@ class SummarizeDescriptionsConfig(BaseModel):
         self, root_dir: str, model_config: LanguageModelConfig
     ) -> dict:
         """Get the resolved description summarization strategy."""
-        from graphrag.index.operations.summarize_descriptions.summarize_descriptions import (
-            SummarizeStrategyType,
-        )
-
         return self.strategy or {
-            "type": SummarizeStrategyType.graph_intelligence,
+            "type": "graph_intelligence",
             "llm": model_config.model_dump(),
             "summarize_prompt": (Path(root_dir) / self.prompt).read_text(
                 encoding="utf-8"

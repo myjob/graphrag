@@ -7,7 +7,6 @@ These tests will test the VectorStoreFactory class and the creation of each vect
 
 import pytest
 
-from graphrag.config.enums import VectorStoreType
 from graphrag.vector_stores.azure_ai_search import AzureAISearchVectorStore
 from graphrag.vector_stores.base import BaseVectorStore
 from graphrag.vector_stores.cosmosdb import CosmosDBVectorStore
@@ -20,9 +19,7 @@ def test_create_lancedb_vector_store():
         "collection_name": "test_collection",
         "db_uri": "/tmp/lancedb",
     }
-    vector_store = VectorStoreFactory.create_vector_store(
-        VectorStoreType.LanceDB.value, kwargs
-    )
+    vector_store = VectorStoreFactory.create_vector_store("lancedb", kwargs)
     assert isinstance(vector_store, LanceDBVectorStore)
     assert vector_store.collection_name == "test_collection"
 
@@ -34,9 +31,7 @@ def test_create_azure_ai_search_vector_store():
         "url": "https://test.search.windows.net",
         "api_key": "test_key",
     }
-    vector_store = VectorStoreFactory.create_vector_store(
-        VectorStoreType.AzureAISearch.value, kwargs
-    )
+    vector_store = VectorStoreFactory.create_vector_store("azure_ai_search", kwargs)
     assert isinstance(vector_store, AzureAISearchVectorStore)
 
 
@@ -47,9 +42,7 @@ def test_create_cosmosdb_vector_store():
         "connection_string": "AccountEndpoint=https://test.documents.azure.com:443/;AccountKey=test_key==",
         "database_name": "test_db",
     }
-    vector_store = VectorStoreFactory.create_vector_store(
-        VectorStoreType.CosmosDB.value, kwargs
-    )
+    vector_store = VectorStoreFactory.create_vector_store("cosmosdb", kwargs)
     assert isinstance(vector_store, CosmosDBVectorStore)
 
 
@@ -82,9 +75,9 @@ def test_register_and_create_custom_vector_store():
 def test_get_vector_store_types():
     vector_store_types = VectorStoreFactory.get_vector_store_types()
     # Check that built-in types are registered
-    assert VectorStoreType.LanceDB.value in vector_store_types
-    assert VectorStoreType.AzureAISearch.value in vector_store_types
-    assert VectorStoreType.CosmosDB.value in vector_store_types
+    assert "lancedb" in vector_store_types
+    assert "azure_ai_search" in vector_store_types
+    assert "cosmosdb" in vector_store_types
 
 
 def test_create_unknown_vector_store():
@@ -94,9 +87,9 @@ def test_create_unknown_vector_store():
 
 def test_is_supported_type():
     # Test built-in types
-    assert VectorStoreFactory.is_supported_type(VectorStoreType.LanceDB.value)
-    assert VectorStoreFactory.is_supported_type(VectorStoreType.AzureAISearch.value)
-    assert VectorStoreFactory.is_supported_type(VectorStoreType.CosmosDB.value)
+    assert VectorStoreFactory.is_supported_type("lancedb")
+    assert VectorStoreFactory.is_supported_type("azure_ai_search")
+    assert VectorStoreFactory.is_supported_type("cosmosdb")
 
     # Test unknown type
     assert not VectorStoreFactory.is_supported_type("unknown")

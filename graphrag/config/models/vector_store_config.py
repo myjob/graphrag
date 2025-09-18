@@ -12,7 +12,7 @@ from graphrag.config.enums import VectorStoreType
 class VectorStoreConfig(BaseModel):
     """The default configuration section for Vector Store."""
 
-    type: str = Field(
+    type: VectorStoreType | str = Field(
         description="The vector store type to use.",
         default=vector_store_defaults.type,
     )
@@ -24,12 +24,12 @@ class VectorStoreConfig(BaseModel):
 
     def _validate_db_uri(self) -> None:
         """Validate the database URI."""
-        if self.type == VectorStoreType.LanceDB.value and (
+        if self.type == "lancedb" and (
             self.db_uri is None or self.db_uri.strip() == ""
         ):
             self.db_uri = vector_store_defaults.db_uri
 
-        if self.type != VectorStoreType.LanceDB.value and (
+        if self.type != "lancedb" and (
             self.db_uri is not None and self.db_uri.strip() != ""
         ):
             msg = "vector_store.db_uri is only used when vector_store.type == lancedb. Please rerun `graphrag init` and select the correct vector store type."
@@ -42,21 +42,17 @@ class VectorStoreConfig(BaseModel):
 
     def _validate_url(self) -> None:
         """Validate the database URL."""
-        if self.type == VectorStoreType.AzureAISearch and (
+        if self.type == "azure_ai_search" and (
             self.url is None or self.url.strip() == ""
         ):
             msg = "vector_store.url is required when vector_store.type == azure_ai_search. Please rerun `graphrag init` and select the correct vector store type."
             raise ValueError(msg)
 
-        if self.type == VectorStoreType.CosmosDB and (
-            self.url is None or self.url.strip() == ""
-        ):
+        if self.type == "cosmos_db" and (self.url is None or self.url.strip() == ""):
             msg = "vector_store.url is required when vector_store.type == cosmos_db. Please rerun `graphrag init` and select the correct vector store type."
             raise ValueError(msg)
 
-        if self.type == VectorStoreType.LanceDB and (
-            self.url is not None and self.url.strip() != ""
-        ):
+        if self.type == "lancedb" and (self.url is not None and self.url.strip() != ""):
             msg = "vector_store.url is only used when vector_store.type == azure_ai_search or vector_store.type == cosmos_db. Please rerun `graphrag init` and select the correct vector store type."
             raise ValueError(msg)
 

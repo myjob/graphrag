@@ -43,12 +43,8 @@ class CommunityReportsConfig(BaseModel):
         self, root_dir: str, model_config: LanguageModelConfig
     ) -> dict:
         """Get the resolved community report extraction strategy."""
-        from graphrag.index.operations.summarize_communities.typing import (
-            CreateCommunityReportsStrategyType,
-        )
-
         return self.strategy or {
-            "type": CreateCommunityReportsStrategyType.graph_intelligence,
+            "type": "graph_intelligence",
             "llm": model_config.model_dump(),
             "graph_prompt": (Path(root_dir) / self.graph_prompt).read_text(
                 encoding="utf-8"

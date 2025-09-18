@@ -37,13 +37,13 @@ FAKE_API_KEY = "NOT_AN_API_KEY"
 
 DEFAULT_CHAT_MODEL_CONFIG = {
     "api_key": FAKE_API_KEY,
-    "type": defs.DEFAULT_CHAT_MODEL_TYPE.value,
+    "type": defs.DEFAULT_CHAT_MODEL_TYPE,
     "model": defs.DEFAULT_CHAT_MODEL,
 }
 
 DEFAULT_EMBEDDING_MODEL_CONFIG = {
     "api_key": FAKE_API_KEY,
-    "type": defs.DEFAULT_EMBEDDING_MODEL_TYPE.value,
+    "type": defs.DEFAULT_EMBEDDING_MODEL_TYPE,
     "model": defs.DEFAULT_EMBEDDING_MODEL,
 }
 

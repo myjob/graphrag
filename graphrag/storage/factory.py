@@ -7,7 +7,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, ClassVar
 
-from graphrag.config.enums import StorageType
 from graphrag.storage.blob_pipeline_storage import BlobPipelineStorage
 from graphrag.storage.cosmosdb_pipeline_storage import CosmosDBPipelineStorage
 from graphrag.storage.file_pipeline_storage import FilePipelineStorage
@@ -77,7 +76,7 @@ class StorageFactory:
 
 
 # --- register built-in storage implementations ---
-StorageFactory.register(StorageType.blob.value, BlobPipelineStorage)
-StorageFactory.register(StorageType.cosmosdb.value, CosmosDBPipelineStorage)
-StorageFactory.register(StorageType.file.value, FilePipelineStorage)
-StorageFactory.register(StorageType.memory.value, MemoryPipelineStorage)
+StorageFactory.register("blob", BlobPipelineStorage)
+StorageFactory.register("cosmosdb", CosmosDBPipelineStorage)
+StorageFactory.register("file", FilePipelineStorage)
+StorageFactory.register("memory", MemoryPipelineStorage)

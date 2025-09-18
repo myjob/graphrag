@@ -10,7 +10,6 @@ from typing import TYPE_CHECKING, ClassVar
 from graphrag.cache.json_pipeline_cache import JsonPipelineCache
 from graphrag.cache.memory_pipeline_cache import InMemoryCache
 from graphrag.cache.noop_pipeline_cache import NoopPipelineCache
-from graphrag.config.enums import CacheType
 from graphrag.storage.blob_pipeline_storage import BlobPipelineStorage
 from graphrag.storage.cosmosdb_pipeline_storage import CosmosDBPipelineStorage
 from graphrag.storage.file_pipeline_storage import FilePipelineStorage
@@ -98,8 +97,8 @@ def create_cosmosdb_cache(**kwargs) -> PipelineCache:
 
 
 # --- register built-in cache implementations ---
-CacheFactory.register(CacheType.none.value, NoopPipelineCache)
-CacheFactory.register(CacheType.memory.value, InMemoryCache)
-CacheFactory.register(CacheType.file.value, create_file_cache)
-CacheFactory.register(CacheType.blob.value, create_blob_cache)
-CacheFactory.register(CacheType.cosmosdb.value, create_cosmosdb_cache)
+CacheFactory.register("none", NoopPipelineCache)
+CacheFactory.register("memory", InMemoryCache)
+CacheFactory.register("file", create_file_cache)
+CacheFactory.register("blob", create_blob_cache)
+CacheFactory.register("cosmosdb", create_cosmosdb_cache)

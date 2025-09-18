@@ -114,11 +114,11 @@ def run_strategy(
 def load_strategy(strategy: ChunkStrategyType) -> ChunkStrategy:
     """Load strategy method definition."""
     match strategy:
-        case ChunkStrategyType.tokens:
+        case "tokens":
             from graphrag.index.operations.chunk_text.strategies import run_tokens
 
             return run_tokens
-        case ChunkStrategyType.sentence:
+        case "sentence":
             # NLTK
             from graphrag.index.operations.chunk_text.bootstrap import bootstrap
             from graphrag.index.operations.chunk_text.strategies import run_sentences

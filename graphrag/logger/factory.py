@@ -9,8 +9,6 @@ import logging
 from pathlib import Path
 from typing import TYPE_CHECKING, ClassVar
 
-from graphrag.config.enums import ReportingType
-
 if TYPE_CHECKING:
     from collections.abc import Callable
 
@@ -109,5 +107,5 @@ def create_blob_logger(**kwargs) -> logging.Handler:
 
 
 # --- register built-in implementations ---
-LoggerFactory.register(ReportingType.file.value, create_file_logger)
-LoggerFactory.register(ReportingType.blob.value, create_blob_logger)
+LoggerFactory.register("file", create_file_logger)
+LoggerFactory.register("blob", create_blob_logger)

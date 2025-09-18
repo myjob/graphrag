@@ -6,123 +6,48 @@
 from __future__ import annotations
 
 from enum import Enum
+from typing import Literal
+
+CacheType = Literal["file", "memory", "none", "blob", "cosmosdb"]
+"""The cache configuration type for the pipeline."""
 
 
-class CacheType(str, Enum):
-    """The cache configuration type for the pipeline."""
+InputFileType = Literal["csv", "text", "json"]
+"""The input file type for the pipeline."""
 
-    file = "file"
-    """The file cache configuration type."""
-    memory = "memory"
-    """The memory cache configuration type."""
-    none = "none"
-    """The none cache configuration type."""
-    blob = "blob"
-    """The blob cache configuration type."""
-    cosmosdb = "cosmosdb"
-    """The cosmosdb cache configuration type"""
+StorageType = Literal["file", "blob", "memory", "cosmosdb"]
+"""The output type for the pipeline."""
 
-    def __repr__(self):
-        """Get a string representation."""
-        return f'"{self.value}"'
+VectorStoreType = Literal["lancedb", "azure_ai_search", "cosmosdb"]
+"""The supported vector store types."""
 
+ReportingType = Literal["file", "blob"]
+"""The reporting configuration type for the pipeline."""
 
-class InputFileType(str, Enum):
-    """The input file type for the pipeline."""
+ModelType = Literal[
+    "openai_embedding",
+    "azure_openai_embedding",
+    "openai_chat",
+    "azure_openai_chat",
+    "mock_chat",
+    "mock_embedding",
+]
+"""LLMType enum class definition."""
 
-    csv = "csv"
-    """The CSV input type."""
-    text = "text"
-    """The text input type."""
-    json = "json"
-    """The JSON input type."""
+AuthType = Literal["api_key", "azure_managed_identity"]
+"""AuthType enum class definition."""
 
-    def __repr__(self):
-        """Get a string representation."""
-        return f'"{self.value}"'
+AsyncType = Literal["asyncio", "threaded"]
+"""Enum for the type of async to use."""
 
+ChunkStrategyType = Literal["tokens", "sentence"]
+"""ChunkStrategy class definition."""
 
-class StorageType(str, Enum):
-    """The output type for the pipeline."""
+NounPhraseExtractorType = Literal["regex_english", "syntactic_parser", "cfg"]
+"""Noun phrase extractor based on dependency parsing and NER using SpaCy."""
 
-    file = "file"
-    """The file output type."""
-    memory = "memory"
-    """The memory output type."""
-    blob = "blob"
-    """The blob output type."""
-    cosmosdb = "cosmosdb"
-    """The cosmosdb output type"""
-
-    def __repr__(self):
-        """Get a string representation."""
-        return f'"{self.value}"'
-
-
-class VectorStoreType(str, Enum):
-    """The supported vector store types."""
-
-    LanceDB = "lancedb"
-    AzureAISearch = "azure_ai_search"
-    CosmosDB = "cosmosdb"
-
-
-class ReportingType(str, Enum):
-    """The reporting configuration type for the pipeline."""
-
-    file = "file"
-    """The file reporting configuration type."""
-    blob = "blob"
-    """The blob reporting configuration type."""
-
-    def __repr__(self):
-        """Get a string representation."""
-        return f'"{self.value}"'
-
-
-class ModelType(str, Enum):
-    """LLMType enum class definition."""
-
-    # Embeddings
-    OpenAIEmbedding = "openai_embedding"
-    AzureOpenAIEmbedding = "azure_openai_embedding"
-
-    # Chat Completion
-    OpenAIChat = "openai_chat"
-    AzureOpenAIChat = "azure_openai_chat"
-
-    # Debug
-    MockChat = "mock_chat"
-    MockEmbedding = "mock_embedding"
-
-    def __repr__(self):
-        """Get a string representation."""
-        return f'"{self.value}"'
-
-
-class AuthType(str, Enum):
-    """AuthType enum class definition."""
-
-    APIKey = "api_key"
-    AzureManagedIdentity = "azure_managed_identity"
-
-
-class AsyncType(str, Enum):
-    """Enum for the type of async to use."""
-
-    AsyncIO = "asyncio"
-    Threaded = "threaded"
-
-
-class ChunkStrategyType(str, Enum):
-    """ChunkStrategy class definition."""
-
-    tokens = "tokens"
-    sentence = "sentence"
-
-    def __repr__(self):
-        """Get a string representation."""
-        return f'"{self.value}"'
+ModularityMetric = Literal["graph", "lcc", "weighted_components"]
+"""Enum for the modularity metric to use."""
 
 
 class SearchMethod(Enum):
@@ -149,26 +74,3 @@ class IndexingMethod(str, Enum):
     """Incremental update with standard indexing."""
     FastUpdate = "fast-update"
     """Incremental update with fast indexing."""
-
-
-class NounPhraseExtractorType(str, Enum):
-    """Enum for the noun phrase extractor options."""
-
-    RegexEnglish = "regex_english"
-    """Standard extractor using regex. Fastest, but limited to English."""
-    Syntactic = "syntactic_parser"
-    """Noun phrase extractor based on dependency parsing and NER using SpaCy."""
-    CFG = "cfg"
-    """Noun phrase extractor combining CFG-based noun-chunk extraction and NER."""
-
-
-class ModularityMetric(str, Enum):
-    """Enum for the modularity metric to use."""
-
-    Graph = "graph"
-    """Graph modularity metric."""
-
-    LCC = "lcc"
-
-    WeightedComponents = "weighted_components"
-    """Weighted components modularity metric."""

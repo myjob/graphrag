@@ -39,12 +39,8 @@ class TextEmbeddingConfig(BaseModel):
 
     def resolved_strategy(self, model_config: LanguageModelConfig) -> dict:
         """Get the resolved text embedding strategy."""
-        from graphrag.index.operations.embed_text.embed_text import (
-            TextEmbedStrategyType,
-        )
-
         return self.strategy or {
-            "type": TextEmbedStrategyType.openai,
+            "type": "openai",
             "llm": model_config.model_dump(),
             "num_threads": model_config.concurrent_requests,
             "batch_size": self.batch_size,

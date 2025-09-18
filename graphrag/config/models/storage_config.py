@@ -30,7 +30,7 @@ class StorageConfig(BaseModel):
     def validate_base_dir(cls, value, info):
         """Ensure that base_dir is a valid filesystem path when using local storage."""
         # info.data contains other field values, including 'type'
-        if info.data.get("type") != StorageType.file:
+        if info.data.get("type") != "file":
             return value
         return str(Path(value))
 

@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 async def build_index(
     config: GraphRagConfig,
-    method: IndexingMethod | str = IndexingMethod.Standard,
+    method: IndexingMethod | str = IndexingMethod.Standard.value,
     is_update_run: bool = False,
     memory_profile: bool = False,
     callbacks: list[WorkflowCallbacks] | None = None,
@@ -97,5 +97,4 @@ async def build_index(
 
 
 def _get_method(method: IndexingMethod | str, is_update_run: bool) -> str:
-    m = method.value if isinstance(method, IndexingMethod) else method
-    return f"{m}-update" if is_update_run else m
+    return f"{method}-update" if is_update_run else method

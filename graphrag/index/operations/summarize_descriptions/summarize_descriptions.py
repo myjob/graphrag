@@ -31,9 +31,7 @@ async def summarize_descriptions(
     """Summarize entity and relationship descriptions from an entity graph, using a language model."""
     logger.debug("summarize_descriptions strategy=%s", strategy)
     strategy = strategy or {}
-    strategy_exec = load_strategy(
-        strategy.get("type", SummarizeStrategyType.graph_intelligence)
-    )
+    strategy_exec = load_strategy(strategy.get("type", "graph_intelligence"))
     strategy_config = {**strategy}
 
     async def get_summarized(
@@ -111,7 +109,7 @@ async def summarize_descriptions(
 def load_strategy(strategy_type: SummarizeStrategyType) -> SummarizationStrategy:
     """Load strategy method definition."""
     match strategy_type:
-        case SummarizeStrategyType.graph_intelligence:
+        case "graph_intelligence":
             from graphrag.index.operations.summarize_descriptions.graph_intelligence_strategy import (
                 run_graph_intelligence,
             )
