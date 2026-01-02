@@ -115,6 +115,8 @@ async def _run_pipeline(
 
         logger.info("Executing pipeline...")
         for name, workflow_function in pipeline.run():
+            print(f"DEBUG: Processing workflow {name}") # Added debug
+
             last_workflow = name
             context.callbacks.workflow_start(name, None)
             work_time = time.time()

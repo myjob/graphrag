@@ -94,3 +94,6 @@ VectorStoreFactory.register(
     VectorStoreType.AzureAISearch.value, AzureAISearchVectorStore
 )
 VectorStoreFactory.register(VectorStoreType.CosmosDB.value, CosmosDBVectorStore)
+from graphrag.vector_stores.postgres import PostgresVectorStore
+
+VectorStoreFactory.register("postgres", PostgresVectorStore)

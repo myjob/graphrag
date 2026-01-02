@@ -1,0 +1,3 @@
+
+Always use the virtual environment provided in .venv; always start python with the path to the virtual environment .venv/bin/python
+please use the source code of graphrag rather than the .venv 
