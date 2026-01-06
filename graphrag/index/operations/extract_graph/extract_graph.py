@@ -99,6 +99,12 @@ def _load_strategy(strategy_type: ExtractEntityStrategyType) -> EntityExtractStr
 
 def _merge_entities(entity_dfs) -> pd.DataFrame:
     all_entities = pd.concat(entity_dfs, ignore_index=True)
+    required_columns = ["title", "type", "description", "source_id"]
+    
+    # If the dataframe is empty or missing required columns (e.g. no entities found), return empty result
+    if all_entities.empty or not all(col in all_entities.columns for col in required_columns):
+        return pd.DataFrame(columns=["title", "type", "description", "text_unit_ids", "frequency"])
+
     return (
         all_entities.groupby(["title", "type"], sort=False)
         .agg(
@@ -112,6 +118,11 @@ def _merge_entities(entity_dfs) -> pd.DataFrame:
 
 def _merge_relationships(relationship_dfs) -> pd.DataFrame:
     all_relationships = pd.concat(relationship_dfs, ignore_index=False)
+    required_columns = ["source", "target", "description", "source_id", "weight"]
+
+    if all_relationships.empty or not all(col in all_relationships.columns for col in required_columns):
+        return pd.DataFrame(columns=["source", "target", "description", "text_unit_ids", "weight"])
+
     return (
         all_relationships.groupby(["source", "target"], sort=False)
         .agg(
