@@ -1,4 +1,5 @@
 
+import os
 import asyncio
 import logging
 import re
@@ -207,4 +208,5 @@ def index_cli(
         sys.exit(1)
 
 if __name__ == "__main__":
+    os.environ['LITELLM_LOG'] = 'DEBUG' 
     app()
